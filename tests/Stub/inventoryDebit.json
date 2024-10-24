@@ -1,0 +1,15 @@
+{
+    "batchIds": [100201, 100202, 100203, 100204],
+    "pickedItems": [
+        {
+            "check_sku": "A2-NPB0122956",
+            "location": "AB-06-18-3",
+            "quantity": 2
+        },
+        {
+            "check_sku": "A2-NPB01086J5",
+            "location": "AC-07-03-1",
+            "quantity": 1
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "sku": "3PB0100116",
+    "boms": [
+        {
+            "materialSku": "106MM0116",
+            "materialName": "Mod for iPhone SE/5s-靛藍邊框",
+            "quantity": 1,
+            "sequence": 1,
+            "pickable": 1
+        },
+        {
+            "materialSku": "106MB0101A",
+            "materialName": "Mod for iPhone SE/5s-透明全亮背板",
+            "quantity": 1,
+            "sequence": 2,
+            "pickable": 1
+        }
+    ]
+}

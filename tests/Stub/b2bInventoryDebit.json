@@ -1,0 +1,17 @@
+{
+    "batchIds": [100201, 100202, 100203, 100204],
+    "pickedItems": [
+        {
+            "sku": "A2-NPB0122956",
+            "location": "XB-06-18-3",
+            "quantity": 2,
+            "employeeNo":"123"
+        },
+        {
+            "sku": "A2-NPB01086J5",
+            "location": "XC-07-03-1",
+            "quantity": 1,
+            "employeeNo":"123"
+        }
+    ]
+}
