@@ -18,3 +18,4 @@ yarn-error.log
 /storage/slack/*csv
 composer.lock
 package-lock.json
+mix-manifest.json
