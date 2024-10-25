@@ -13,7 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\CreateAZPickingListCommand',
         'App\Console\Commands\SyncCheckSkuMaterialCommand',
         'App\Console\Commands\SyncMaterialCommand',
         'App\Console\Commands\SyncPickingAreaInventoryCommand',
@@ -29,8 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('sync:pickingAreaInventory shipping_server --az')->timezone('Asia/Taipei')->dailyAt('02:05')->withoutOverlapping();
-        $schedule->command('stock:out')->timezone('Asia/Taipei')->dailyAt('00:45')->withoutOverlapping();
+       $schedule->command('stock:out')->timezone('Asia/Taipei')->dailyAt('00:45')->withoutOverlapping();
         $schedule->command('stock:out')->timezone('Asia/Taipei')->dailyAt('12:45')->withoutOverlapping();
         $schedule->command('clear:data')->timezone('Asia/Taipei')->dailyAt('01:00')->withoutOverlapping();
 

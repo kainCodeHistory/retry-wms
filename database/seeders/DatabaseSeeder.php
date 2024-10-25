@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
     {
         $factoryRepository = new \App\Repositories\FactoryRepository();
         $factory = $factoryRepository->search([
-            'name' => '烏日廠'
+            'name' => '測試廠'
         ])->first();
         $warehouseRepository = new \App\Repositories\WarehouseRepository();
         $now = Carbon::now();
@@ -329,7 +329,7 @@ class DatabaseSeeder extends Seeder
 
     private function seedDefaultStorageBoxes()
     {
-        $factory = \App\Models\Factory::where('name', '烏日廠')->first();
+        $factory = \App\Models\Factory::where('name', '測試廠')->first();
 
         $this->createStorageBoxes($factory, 'A', 5, 1600);
         $this->createStorageBoxes($factory, 'B', 5, 150);
