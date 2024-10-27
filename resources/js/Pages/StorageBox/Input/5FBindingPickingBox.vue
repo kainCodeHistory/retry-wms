@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h4 class="font-semibold text-xl text-gray-800 leading-tight">
-        撿料倉 - 罕見品及MN區儲位上架
+        B2B - 入庫 - 綁定撿料箱
       </h4>
     </template>
     <div class="py-12">
@@ -17,22 +17,22 @@
 
             <div>
               <div class="mt-4">
-                <wx-label for="location">
+                <wx-label for="storageBox">
                   <template
                     ><sup class="text-red-500 font-bold">*</sup>
-                    儲位條碼</template
+                    貨箱條碼</template
                   >
                 </wx-label>
                 <wx-input
-                  id="location"
+                  id="box"
                   class="block mt-1 w-full"
                   type="text"
-                  :value="location"
-                  @update="(val) => (location = val)"
+                  :value="storageBox"
+                  @update="(val) => (storageBox = val)"
                   required
                   autofocus
-                  @keypress="getLocation"
-                  ref="location"
+                  ref="storageBox"
+                 @keypress="getStorageBox"
                 />
               </div>
 
@@ -51,6 +51,7 @@
                   required
                   autofocus
                   @keypress="getMaterialName"
+                  ref="sku"
                 />
               </div>
 
@@ -61,7 +62,7 @@
               <div class="mt-4">
                 <wx-label for="quantity"
                   ><template
-                    ><sup class="text-red-500 font-bold">*</sup>數量</template
+                    ><sup class="text-red-500 font-bold">*</sup> 數量</template
                   ></wx-label
                 >
                 <wx-input
@@ -75,20 +76,10 @@
                 />
               </div>
 
-              <div class="mt-4">
-                <wx-label for="batchNo" value="批號"></wx-label>
-                <wx-input
-                  id="batchNo"
-                  class="block mt-1 w-full"
-                  type="text"
-                  :value="batchNo"
-                  @update="(val) => (batchNo = val)"
-                  autofocus
-                />
-              </div>
-
               <div class="flex items-center justify-end mt-4">
-                <wx-button class="ml-3" color="blue" @click="bindLocation">綁定</wx-button>
+                <wx-button class="ml-3" @click="bindStorageBox" color="blue"
+                  >儲存</wx-button
+                >
               </div>
             </div>
           </div>
@@ -107,14 +98,12 @@ import WxButton from "@/Components/Button";
 import WxInput from "@/Components/Input";
 import WxLabel from "@/Components/Label";
 import WxSpinner from "@/Components/Spinner";
-import WxTableCell from "@/Components/TableCell";
-import WxTableHeader from "@/Components/TableHeader";
 import WxValidationMessages from "@/Components/ValidationMessages";
 
 import WxCommon from "@/Mixins/Common";
 
 export default {
-  name: "pickingAreaAddLocation",
+  name: "BindingPickingBox",
 
   mixins: [WxCommon],
 
@@ -124,19 +113,15 @@ export default {
     WxInput,
     WxLabel,
     WxSpinner,
-    WxTableCell,
-    WxTableHeader,
     WxValidationMessages,
   },
 
   data() {
     return {
-      batchNo: "",
-      location: "",
+      storageBox: "",
       materialName: "",
       quantity: 0,
       sku: "",
-      storageBox: ""
     };
   },
 
@@ -149,57 +134,28 @@ export default {
   },
 
   methods: {
-    async bindLocation() {
+    async bindStorageBox() {
       try {
         this.loader = true;
 
         await this.axios.get("/sanctum/csrf-cookie");
-        const result = await this.axios.post(
-          "/api/picking-area/ac",
+        await this.axios.post(
+          "/api/b2b-5f/storage-box/input/bind-picking-Box",
           {
             batchNo: this.batchNo,
-            location: this.location,
-            quantity: this.quantity,
+            storageBox: this.storageBox,
             sku: this.sku,
-            storageBox: this.storageBox
+            quantity: this.quantity,
           }
         );
 
         this.reset();
-        this.$refs.location.focus();
-        this.displayValidation(true, [], "綁定成功。");
+        this.$refs.storageBox.focus();
+        this.displayValidation(true, [], "儲存成功。");
         this.loader = false;
       } catch (error) {
         this.displayValidation(true, this.handleAxiosResponseErrorMessages(error), "錯誤訊息。");
         this.loader = false;
-      }
-    },
-
-    async getLocation(e) {
-      if (e.key.toUpperCase() === "ENTER" && e.target.value.trim().length > 0) {
-        try {
-          this.loader = true;
-
-          await this.axios.get("/sanctum/csrf-cookie");
-          const result = await this.axios.get(
-            `/api/picking-area/ac/${e.target.value.trim()}`
-          );
-
-          if (result.data.sku === "") {
-              this.location = result.data.location;
-              this.storageBox = result.data.storageBox;
-              this.displayValidation(false);
-          } else {
-              this.displayValidation(true, [`此儲位已綁定料號 ${result.data.sku}，無法重複綁定。`], "錯誤訊息。");
-              this.reset;
-              this.$refs.location.focus();
-          }
-
-          this.loader = false;
-        } catch (error) {
-          this.displayValidation(true, this.handleAxiosResponseErrorMessages(error), "錯誤訊息。");
-          this.loader = false;
-        }
       }
     },
 
@@ -214,6 +170,7 @@ export default {
           );
 
           this.materialName = result.data.name;
+          this.sku = result.data.sku;
           this.loader = false;
         } catch (error) {
           this.loader = false;
@@ -222,15 +179,35 @@ export default {
         this.displayValidation(false);
       }
     },
+     async getStorageBox(e) {
+      if (e.key.toUpperCase() === "ENTER" && e.target.value.trim().length > 3) {
+        try {
+          this.loader = true;
+
+          await this.axios.get("/sanctum/csrf-cookie");
+          const result = await this.axios.get(
+            `/api/storage-box/check/${e.target.value.trim()}`
+          );
+
+          this.loader = false;
+          this.displayValidation(false);
+          this.$refs.sku.focus();
+        } catch (error) {
+          this.loader = false;
+          this.displayValidation(
+            true,
+            this.handleAxiosResponseErrorMessages(error),
+            "錯誤訊息。"
+          );
+        }
+      }
+    },
 
     reset() {
-        this.batchNo = "";
-        this.location = "";
-        this.materialName = "";
-        this.newQuantity = 0;
-        this.quantity = 0;
-        this.sku = "";
-        this.storageBox =  "";
+      this.storageBox = "";
+      this.materialName = "";
+      this.quantity = 0;
+      this.sku = "";
     },
   },
 };
