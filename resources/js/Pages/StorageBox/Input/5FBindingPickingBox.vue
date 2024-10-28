@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h4 class="font-semibold text-xl text-gray-800 leading-tight">
-        B2B - 入庫 - 綁定撿料箱
+      入庫綁定撿料箱
       </h4>
     </template>
     <div class="py-12">

@@ -84,30 +84,6 @@
                           品項出庫
                         </wx-dropdown-link>
                         <div class="block px-4 py-2 text-xs text-gray-400">
-                          補料
-                        </div>
-                        <wx-dropdown-link
-                          href="/refill-material"
-                          :active="currentRoute === 'b2b5fRefillMaterial'"
-                        >
-                          貨箱補料
-                        </wx-dropdown-link>
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                          盤點
-                        </div>
-                        <wx-dropdown-link
-                          href="/inventory"
-                          :active="currentRoute === 'b2b5fInventory'"
-                        >
-                          庫存初次盤點
-                        </wx-dropdown-link>
-                        <wx-dropdown-link
-                          href="/double-inventory"
-                          :active="currentRoute === 'b2b5fDoubleInventory'"
-                        >
-                          庫存二次盤點
-                        </wx-dropdown-link>
-                        <div class="block px-4 py-2 text-xs text-gray-400">
                           查詢
                         </div>
                         <wx-dropdown-link
@@ -115,18 +91,6 @@
                           :active="currentRoute === 'b2b5fEanSkuSearch'"
                         >
                           EAN/SKU 查詢
-                        </wx-dropdown-link>
-                        <wx-dropdown-link
-                          href="/storage-box-location-search"
-                          :active="currentRoute === 'b2b5fStorageBoxLocationSearch'"
-                        >
-                          貨箱查詢
-                        </wx-dropdown-link>
-                         <wx-dropdown-link
-                          href="/location-search"
-                          :active="currentRoute === 'b2b5fLocationSearch'"
-                        >
-                          儲位查詢
                         </wx-dropdown-link>
                         <wx-dropdown-link
                           href="/stock-logs"
@@ -284,12 +248,6 @@
                 >
                   綁定特殊儲位
                 </wx-responsive-nav-link>
-                <wx-responsive-nav-link
-                  href="/refill-material"
-                  :active="currentRoute === 'b2b5fRefillMaterial'"
-                >
-                  貨箱補料
-                </wx-responsive-nav-link>
 
                 <wx-responsive-nav-link
                   href="/item-inventory?event=transfer_input"
@@ -304,34 +262,10 @@
                   品項出庫
                 </wx-responsive-nav-link>
                 <wx-responsive-nav-link
-                  href="/inventory"
-                  :active="currentRoute === 'b2b5fInventory'"
-                >
-                  庫存初次盤點
-                </wx-responsive-nav-link>
-                <wx-responsive-nav-link
-                  href="/double-inventory"
-                  :active="currentRoute === 'b2b5fDoubleInventory'"
-                >
-                 庫存二次盤點
-                </wx-responsive-nav-link>
-                <wx-responsive-nav-link
                   href="/ean-sku-search"
                   :active="currentRoute === 'b2b5fEanSkuSearch'"
                 >
                  EAN/SKU 查詢
-                </wx-responsive-nav-link>
-                <wx-responsive-nav-link
-                  href="/storage-box-location-search"
-                  :active="currentRoute === 'b2b5fStorageBoxLocationSearch'"
-                >
-                  貨箱查詢
-                </wx-responsive-nav-link>
-                <wx-responsive-nav-link
-                  href="/location-search"
-                  :active="currentRoute === 'b2b5fLocationSearch'"
-                >
-                 儲位查詢
                 </wx-responsive-nav-link>
                 <wx-responsive-nav-link
                   href="/stock-logs"

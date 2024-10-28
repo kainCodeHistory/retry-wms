@@ -39,10 +39,8 @@ class GetB2BLocationService extends AppService
             throw ValidationException::withMessages(['eanSku' => '查無此料號 (' . $this->eanSku . ')。']);
         }
         $material = $material->get(0);
-        $storageZone = config('storageBoxZone.storage');
-        $floor = (array_values($storageZone['5F']));
-
-        $storageBoxes = $this->storageBoxItemRepository->getLocations($material->sku,$floor)->all();
+       
+        $storageBoxes = $this->storageBoxItemRepository->getLocations($material->sku)->all();
 
         $defaultLocations = $this->storageItemRepository->search([
             'material_id' => $material->id

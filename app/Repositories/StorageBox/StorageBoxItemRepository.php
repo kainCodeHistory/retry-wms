@@ -14,16 +14,6 @@ class StorageBoxItemRepository extends BaseRepository
     {
         return $this->model::where('storage_box', $storageBox)->delete();
     }
-
-    public function getItemsByStorageBoxes(array $boxes)
-    {
-        return $this->model::whereIn('storage_box', $boxes)->get();
-    }
-
-    public function getStorages(string $storageBox)
-    {
-        return $this->model::leftJoin('storage_boxes', 'storage_box_items.storage_box', '=', 'storage_boxes.barcode')->where('storage_box', $storageBox)->get();
-    }
     public function getItemsDetails(string $location, string $sku, string $storageBox,array $prefix)
     {
         return $this->model::select('storage_boxes.barcode', 'storage_boxes.location', 'storage_boxes.is_empty', 'storage_box_items.material_id', 'storage_box_items.material_sku', 'storage_box_items.material_name', 'storage_box_items.batch_no', 'storage_box_items.quantity', 'materials.ean')
@@ -56,13 +46,12 @@ class StorageBoxItemRepository extends BaseRepository
     }
 
 
-    public function getLocations(string $sku,array $prefix)
+    public function getLocations(string $sku)
     {
         return $this->model::select('storage_boxes.id', 'storage_boxes.warehouse_id', 'storage_boxes.location','storage_box_items.storage_box', 'storage_box_items.batch_no', 'storage_box_items.quantity',DB::Raw('warehouses.name As warehouse'))
             ->leftjoin('storage_boxes', 'storage_boxes.id', '=', 'storage_box_items.storage_box_id')
             ->leftjoin('warehouses', 'warehouses.id', '=', 'storage_boxes.warehouse_id')
             ->where('storage_box_items.material_sku', $sku)
-            ->whereIn('storage_boxes.prefix', $prefix)
             ->orderby('storage_boxes.warehouse_id')
             ->orderby( 'storage_boxes.location')
             ->get();

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Services\Query\AllocateBCustomizedService;
 use App\Services\Query\GetB2BLocationService;
 use App\Services\Query\GetB2BMaterialService;
 use App\Services\Query\GetB2BStorageBoxService;
@@ -11,8 +10,6 @@ use App\Services\Query\GetBindTimeService;
 use App\Services\Query\GetLocationService;
 use App\Services\Query\GetMaterialService;
 use App\Services\Query\GetStorageBoxService;
-use App\Services\Query\ResetAllocateBoxService;
-use App\Services\Query\SearchAllocateBCustomizedService;
 use Illuminate\Http\Request;
 
 class QueryController extends Controller

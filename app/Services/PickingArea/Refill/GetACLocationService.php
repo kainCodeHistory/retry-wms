@@ -3,7 +3,6 @@
 namespace App\Services\PickingArea\Refill;
 
 use App\Repositories\LocationRepository;
-use App\Repositories\StorageBox\PickingItemRepository;
 use App\Services\AppService;
 use Illuminate\Validation\ValidationException;
 
@@ -13,10 +12,9 @@ class GetACLocationService extends AppService
     protected $locationRepository;
     protected $pickingItemRepository;
 
-    public function __construct(LocationRepository $locationRepository, PickingItemRepository $pickingItemRepository)
+    public function __construct(LocationRepository $locationRepository)
     {
         $this->locationRepository = $locationRepository;
-        $this->pickingItemRepository = $pickingItemRepository;
     }
 
     public function setStorageBox(string $storageBox)
@@ -27,11 +25,6 @@ class GetACLocationService extends AppService
 
     public function exec()
     {
-        $pickingItem = $this->pickingItemRepository->search([
-            'storage_box' => $this->storageBox
-        ]);
-
-        if (count($pickingItem) === 0 || str_starts_with($pickingItem->get(0)->location,'XB')) {
             $location = $this->locationRepository->search([
                 'default_storage_box' => $this->storageBox
             ]);
@@ -50,16 +43,5 @@ class GetACLocationService extends AppService
                     'quantity' => 0
                 ];
             }
-        } else {
-            $pickingItem = $pickingItem->get(0);
-            return [
-                'storageBox' => $pickingItem->storage_box,
-                'location' => $pickingItem->location,
-                'sku' => $pickingItem->material_sku,
-                'materialName' => $pickingItem->material_name,
-                'batchNo' => $pickingItem->batch_no,
-                'quantity' => $pickingItem->quantity
-            ];
         }
-    }
 }

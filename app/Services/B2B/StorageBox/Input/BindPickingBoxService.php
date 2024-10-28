@@ -71,10 +71,6 @@ class BindPickingBoxService extends AppService
         $storageBox = $this->storageBoxRepository->search([
             'barcode' => $this->payload['storageBox']
         ])->first();
-        $prefix =  $storageBox->prefix;
-
-        $storageZone = config('storageBoxZone.storage');
-        $floor = (array_values($storageZone['3F']));
 
 
         if (is_null($storageBox)) {
@@ -88,24 +84,12 @@ class BindPickingBoxService extends AppService
         if (is_null($material) === 0) {
             throw ValidationException::withMessages(['sku' => '無此 SKU (' . $this->payload['sku'] . ')。']);
         }
-        $location = $this->storageItemRepository->search([
-            'material_sku' => $this->payload['sku']
-        ])->first();
-        //一開始無預設儲位
-        // if (is_null($location)) {
-        //     throw ValidationException::withMessages(['sku' => '無此 SKU (' . $this->payload['sku'] . ')，儲位。']);
-        // }
-        if(in_array($prefix,$floor)){
-            $alreadyBindStorageBox = $this->storageBoxItemRepository->search(['storage_box' => $this->payload['storageBox']])->first();
-            if (!is_null($alreadyBindStorageBox)) {
-                throw ValidationException::withMessages(['storageBox' => '此貨箱已綁定物料 (' . $alreadyBindStorageBox->material_sku  . ')。']);
-            }
-        }else{
-            $alreadyBindSku = $this->storageBoxItemRepository->search(['material_sku' => $this->payload['sku'],'storage_box' => $this->payload['storageBox']])->first();
-            if (!is_null($alreadyBindSku)) {
-                throw ValidationException::withMessages(['storageBox' => '此貨箱已綁定此物料 (' . $alreadyBindSku->material_sku  . ')。']);
-            }
+
+        $alreadyBindSku = $this->storageBoxItemRepository->search(['material_sku' => $this->payload['sku'], 'storage_box' => $this->payload['storageBox']])->first();
+        if (!is_null($alreadyBindSku)) {
+            throw ValidationException::withMessages(['storageBox' => '此貨箱已綁定此物料 (' . $alreadyBindSku->material_sku  . ')。']);
         }
+
 
 
         try {

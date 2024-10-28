@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h4 class="font-semibold text-xl text-gray-800 leading-tight">
-        B2B - 入庫 - 綁定儲位
+      入庫 - 綁定儲位
       </h4>
     </template>
     <div class="py-12">

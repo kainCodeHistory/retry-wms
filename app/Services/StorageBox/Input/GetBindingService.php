@@ -43,26 +43,18 @@ class GetBindingService extends AppService
         if (is_null($box)) {
             throw ValidationException::withMessages(['storageBox' => '此貨箱沒有綁定物料 (' . $this->storageBox . ')。']);
         }
-        $prefix = $box->prefix;
-        $storageZone = config('storageBoxZone.storage');
-        $floor = (array_values($storageZone['3F']));
+       
 
-        if (in_array($prefix, $floor)) {
+        
             // 預備倉儲位
             $location = $this->inventoryItemRepository->getSuggestLocations($box->material_sku)->first();
 
             return [
                 'location' => is_null($location) ? 'BZ-01-01' : $location->location,
-                'pickLocation' => $this->storageItemRepository->get3FPickingLocations($box->material_sku)
-                    ->pluck('location')
-                    
-            ];
-        } else {
-            return [
                 'pickLocation' => $this->storageItemRepository->get5FPickingLocations($box->material_sku)
                     ->pluck('location')
                     
             ];
-        }
+        
     }
 }
