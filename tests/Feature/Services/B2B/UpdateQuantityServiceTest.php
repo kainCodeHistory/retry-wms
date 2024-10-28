@@ -28,7 +28,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     public function test_it_can_update_quantity_with_adjust_event()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -106,7 +106,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     public function test_it_can_update_quantity_with_input_event()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -193,7 +193,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     public function test_it_can_update_quantity_with_transfer_output_event()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 

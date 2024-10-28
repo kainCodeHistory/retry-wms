@@ -20,7 +20,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         $note = $this->faker->word();
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
         $event = $this->faker->randomElement([
@@ -82,7 +82,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         ]);
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 
@@ -141,7 +141,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         $note = $this->faker->word();
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 
@@ -205,7 +205,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         ]);
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 
@@ -269,7 +269,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         ]);
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 
@@ -339,7 +339,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         ]);
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 
@@ -409,7 +409,7 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         $note = $this->faker->word();
         $user = $this->createUser([
             'name' => 'user',
-            'email' => 'user@evolutivelabs.com'
+            'email' => 'user@tests.com'
         ]);
         Auth::loginUsingId($user->id);
 

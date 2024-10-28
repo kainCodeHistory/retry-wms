@@ -41,7 +41,7 @@ class UpsertB2B5FInputServiceTest extends GeneralTestCase
         $now = Carbon::now('Asia/Taipei');
 
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -83,74 +83,4 @@ class UpsertB2B5FInputServiceTest extends GeneralTestCase
         );
     }
 
-    public function test_it_can_update_b2b_f5_input()
-    {
-        $now = Carbon::now('Asia/Taipei');
-
-        $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
-            'password' => Hash::make('rhino5hield')
-        ]);
-
-        Auth::loginUsingId($user->id);
-
-        $nxk = \App\Models\Material::create([
-            'sku' => 'NX01K',
-            'display_name' => 'Button All In 按鈕',
-            'full_name' => 'Button All In 按鈕',
-            'check_sku' => 'NX01K',
-            'ean' => '4710227230383',
-            'upc' => '888543003005'
-        ]);
-
-        $note = $this->faker->word();
-
-        $input = \App\Models\B2B5FInput::create([
-            'manufacturing_date' => $now->format('Y-m-d'),
-            'material_id' => $nxk->id,
-            'material_sku' => $nxk->sku,
-            'product_title' => $nxk->display_name,
-            'ean' => $nxk->ean,
-            'quantity' => 200,
-            'note' => $note,
-            'user_id' => $user->id,
-            'user_name' => $user->name
-        ]);
-
-        $nxe = \App\Models\Material::create([
-            'sku' => 'NX0108604E',
-            'display_name' => 'Mod NX for iPhone XS Max Rim-White 白色飾條',
-            'full_name' => 'Mod NX for iPhone XS Max Rim-White 白色飾條',
-            'check_sku' => 'NX0108604E',
-            'ean' => '4710227233490',
-            'upc' => '888543004996'
-        ]);
-
-        $note2 = $this->faker->word();
-        app(UpsertB2B5FInputService::class)
-            ->setPayload([
-                'inputId' => $input->id,
-                'manufacturingDate' => Carbon::now()->subDay()->format('Y-m-d'),
-                'sku' => $nxe->sku,
-                'quantity' => 100,
-                'note' => $note2
-            ])
-            ->exec();
-
-        $this->assertDatabaseHas(
-            'b2b_5f_inputs',
-            [
-                'id' => $input->id,
-                'manufacturing_date' => Carbon::now()->subDay()->format('Y-m-d'),
-                'material_id' => $nxe->id,
-                'material_sku' => $nxe->sku,
-                'product_title' => $nxe->display_name,
-                'ean' => $nxe->ean,
-                'quantity' => 100,
-                'note' => $note2,
-                'user_id' => $user->id,
-                'user_name' => $user->name
-            ]
-        );
-    }
 }

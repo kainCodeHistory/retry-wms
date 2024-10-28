@@ -24,7 +24,7 @@ class UserLoginServiceTest extends GeneralTestCase
     public function test_user_can_login()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 

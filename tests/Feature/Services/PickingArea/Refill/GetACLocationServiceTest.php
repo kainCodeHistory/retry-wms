@@ -16,7 +16,7 @@ class GetACLocationServiceTest extends GeneralTestCase
     public function test_it_can_get_picking_item()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -63,7 +63,7 @@ class GetACLocationServiceTest extends GeneralTestCase
     public function test_it_can_get_location_with_default_storage_box()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -96,7 +96,7 @@ class GetACLocationServiceTest extends GeneralTestCase
     public function test_it_can_throw_validation_exception()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
