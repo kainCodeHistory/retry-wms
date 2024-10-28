@@ -27,7 +27,7 @@ class BindACLocationServiceTest extends GeneralTestCase
     public function test_it_can_bind_ac_location()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
         Auth::loginUsingId($user->id);

@@ -27,7 +27,7 @@ class ResetServiceTest extends GeneralTestCase
     public function test_it_can_reset_storage_box_in_zone_aa()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -133,7 +133,7 @@ class ResetServiceTest extends GeneralTestCase
     public function test_it_can_reset_storage_box_in_zone_ab_ac()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 

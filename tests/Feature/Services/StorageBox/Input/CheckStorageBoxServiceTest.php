@@ -45,7 +45,7 @@ class CheckStorageBoxServiceTest extends GeneralTestCase
     public function test_it_can_create_new_storage_box()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com'
+            'email' => 'wmsuser@tests.com'
         ]);
 
         Auth::loginUsingId($user->id);

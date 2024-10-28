@@ -17,7 +17,7 @@ class BindLocationServiceTest extends GeneralTestCase
     public function test_it_can_bind_5F_location_with_storage_box_input_event()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -51,15 +51,6 @@ class BindLocationServiceTest extends GeneralTestCase
         }
         EOL, $location->barcode, $storageBox->barcode);
         $payload = json_decode($jsonString, true);
-
-        //TODO B2B
-        //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-        // $mock = $this->mock(ShippingServerService::class);
-        // $mock->shouldReceive('upsertB2BPickingAreaInventory')
-        //     ->withArgs([$material->sku, Transaction::STORAGE_BOX_INPUT, $location->barcode, $location->priority, $quantity])
-        //     ->once()
-        //     ->andReturn();
-
 
         app(BindLocationService::class)
             ->setPayload($payload)

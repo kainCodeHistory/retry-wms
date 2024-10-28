@@ -63,7 +63,7 @@ class B2BInventoryDebitServiceTest extends GeneralTestCase
     public function test_it_can_inventory_debit_in_zone_xa()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
@@ -180,7 +180,7 @@ class B2BInventoryDebitServiceTest extends GeneralTestCase
     public function test_it_can_inventory_debit_in_zone_xb()
     {
         $user = $this->createUser([
-            'email' => 'wmsuser@evolutivelabs.com',
+            'email' => 'wmsuser@tests.com',
             'password' => Hash::make('rhino5hield')
         ]);
 
