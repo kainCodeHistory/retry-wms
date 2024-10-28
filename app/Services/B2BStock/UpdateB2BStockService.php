@@ -10,7 +10,6 @@ use App\Services\AppService;
 use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
-use Libs\Slack\SlackService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;

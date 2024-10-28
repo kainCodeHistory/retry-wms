@@ -64,7 +64,7 @@ class B2BInventoryDebitServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);
@@ -181,7 +181,7 @@ class B2BInventoryDebitServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);

@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Libs\ShippingServer\ShippingServerService;
 
 use Tests\GeneralTestCase;
 
@@ -29,7 +28,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);
@@ -107,7 +106,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);
@@ -154,13 +153,6 @@ class UpdateQuantityServiceTest extends GeneralTestCase
         EOL, $adjustQuantity, $event, $storageBox->barcode, $note, $material->sku);
         $payload = json_decode($jsonString, true);
 
-        //TODO B2B
-        //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-        // $mock = $this->mock(ShippingServerService::class);
-        // $mock->shouldReceive('upsertB2BPickingAreaInventory')
-        //     ->withArgs([$material->sku, $event, $location, 0, $adjustQuantity])
-        //     ->once()
-        //     ->andReturn();
 
         app(UpdateQuantityService::class)
             ->setPayload($payload)
@@ -194,7 +186,7 @@ class UpdateQuantityServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);
@@ -239,13 +231,6 @@ class UpdateQuantityServiceTest extends GeneralTestCase
         EOL, $adjustQuantity, B2BStockLog::TRANSFER_OUTPUT, $storageBox->barcode, $note, $material->sku);
         $payload = json_decode($jsonString, true);
 
-        //TODO B2B
-        //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-        // $mock = $this->mock(ShippingServerService::class);
-        // $mock->shouldReceive('upsertB2BPickingAreaInventory')
-        //     ->withArgs([$material->sku, B2BStockLog::TRANSFER_OUTPUT, $location, 0, $adjustQuantity])
-        //     ->once()
-        //     ->andReturn();
 
         app(UpdateQuantityService::class)
             ->setPayload($payload)

@@ -17,7 +17,6 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Libs\ShippingServer\ShippingServerService;
 
 class BindACLocationService extends AppService
 {
@@ -147,9 +146,6 @@ class BindACLocationService extends AppService
                 'event' => Transaction::REFILL_INPUT,
                 'user' => Auth::user()->id
             ]);
-
-            // app(ShippingServerService::class)
-            //     ->upsertPickingAreaInventory($material->sku, Transaction::REFILL_INPUT, $location->barcode, $location->priority, (int)$this->payload['quantity']);
 
             DB::commit();
 

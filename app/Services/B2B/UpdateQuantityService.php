@@ -10,7 +10,6 @@ use App\Services\B2BStock\UpdateB2BStockService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Libs\ShippingServer\ShippingServerService;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -20,16 +19,14 @@ class UpdateQuantityService extends AppService
 
     protected $storageBoxItemRepository;
 
-    protected $shippingServerService;
     protected $transactionRepository;
     protected $storageBoxRepository;
 
-    public function __construct(StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository, ShippingServerService $shippingServerService, StorageBoxRepository $storageBoxRepository)
+    public function __construct(StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository, StorageBoxRepository $storageBoxRepository)
     {
         $this->storageBoxItemRepository = $storageBoxItemRepository;
         $this->transactionRepository = $transactionRepository;
         $this->storageBoxRepository = $storageBoxRepository;
-        $this->shippingServerService = $shippingServerService;
     }
 
     public function setPayload(array $payload)

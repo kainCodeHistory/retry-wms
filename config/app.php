@@ -137,44 +137,6 @@ return [
         ]
     ],
 
-    'nx' => [
-        'cloud' => [
-            'host' => env('NXCLOUD_HOST', ''),
-            'token' => env('NXCLOUD_TOKEN', '')
-        ],
-
-        'shipping_server' => [
-            'host' => env('SHIPPING_SERVER_HOST', '')
-        ],
-
-        'shipping_server_v2_stag' => [
-            'host' => env('SHIPPING_SERVER_V2_STAG_HOST', ''),
-            'updatePickingAreaInventory' => false
-        ],
-
-        'shipping_server_v2_prod' => [
-            'host' => env('SHIPPING_SERVER_V2_PROD_HOST', ''),
-            'updatePickingAreaInventory' => true
-        ],
-
-        'datasource' => [
-            'host' => env('DATASOURCE_SERVER_HOST', '')
-        ],
-
-        'bixolon' => [
-            'host' => env('BIXOLON_SERVER_HOST', '')
-        ]
-    ],
-
-    'slack' => [
-        'bot' => [
-            'token' => env('SLACK_BOT_TOKEN', '')
-        ],
-        'channel' => [
-            'nxl_logger' => env('SLACK_WEBHOOK_URL', ''),
-            'nxl_notification' => env('SLACK_NXL_NOTIFICATION_CHANNEL', '')
-        ]
-    ],
 
     'other' => [
         'az_location_priority' => env('AZ_LOCATION_PRIORITY', 0)

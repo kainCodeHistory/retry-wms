@@ -25,7 +25,7 @@ class UserLoginServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         $jsonstring = sprintf(<<<'EOL'
@@ -33,7 +33,7 @@ class UserLoginServiceTest extends GeneralTestCase
             "account": "%s",
             "password": "%s"
         }
-        EOL, $user->email, 'rhino5hield');
+        EOL, $user->email, '123456');
         $payload = json_decode($jsonstring, true);
 
         app(UserLoginService::class)
