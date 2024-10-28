@@ -11,7 +11,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Libs\Slack\SlackService;
 
 class B2BInventoryDebitService extends AppService
 {
@@ -153,9 +152,7 @@ class B2BInventoryDebitService extends AppService
                 ]);
             }
 
-            $message = sprintf("WMS 扣帳失敗，batch key: %s。", $this->batchKey);
-            app(SlackService::class)
-                ->sendMessage(config('app.slack.channel.nxl_notification'), $message);
+           
         }
     }
 }

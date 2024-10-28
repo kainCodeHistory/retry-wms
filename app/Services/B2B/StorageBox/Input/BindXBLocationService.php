@@ -19,7 +19,6 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Libs\ShippingServer\ShippingServerService;
 
 class BindXBLocationService extends AppService
 {

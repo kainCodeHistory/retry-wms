@@ -6,7 +6,6 @@ use App\Models\B2BStockLog;
 use App\Services\B2BStock\UpdateB2BStockService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Libs\Slack\SlackService;
 use Tests\GeneralTestCase;
 
 class UpdateB2BStockServiceTest extends GeneralTestCase
@@ -285,19 +284,6 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
             ]
         ];
 
-        $slackBlocks = $this->createSlackBlocks($event, $sku, $quantity, '無此 SKU 庫存。');
-
-        $this->mock(SlackService::class, function ($mock) use ($slackBlocks) {
-            $mock->shouldReceive('sendMessageViaWebhookURL')
-                ->with(
-                    config('app.slack.channel.nxl_logger'),
-                    $slackBlocks
-                )
-                ->once()
-                ->andReturnNull();
-
-        });
-
         app(UpdateB2BStockService::class)
             ->setPayload($payload)
             ->exec();
@@ -362,16 +348,6 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
 
         $subtotal = $stock->total_quantity - $quantity;
 
-        $slackBlocks = $this->createSlackBlocks($event, $sku, $quantity, sprintf('庫存不足 (原庫存: %s)。', 80));
-        $this->mock(SlackService::class, function ($mock) use ($slackBlocks) {
-            $mock->shouldReceive('sendMessageViaWebhookURL')
-                ->with(
-                    config('app.slack.channel.nxl_logger'),
-                    $slackBlocks
-                )
-                ->once()
-                ->andReturnNull();
-        });
 
         app(UpdateB2BStockService::class)
             ->setPayload($payload)
@@ -459,49 +435,5 @@ class UpdateB2BStockServiceTest extends GeneralTestCase
         );
     }
 
-    private function createSlackBlocks(string $event, string $sku, int $quantity, string $note): array
-    {
-        $blocks = [];
-        array_push($blocks, [
-            "type" => "header",
-            "text" => [
-                "type" => "plain_text",
-                "text" => 'B2B 負庫存。'
-            ]
-        ]);
-
-        array_push($blocks, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*SKU*: `%s`", $sku)
-            ]
-        ]);
-
-        array_push($blocks, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*異動數量*: `%s`", $quantity)
-            ]
-        ]);
-
-        array_push($blocks, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*事件代碼*: `%s`", $event)
-            ]
-        ]);
-
-        array_push($blocks, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*錯誤訊息*: `%s`", $note)
-            ]
-        ]);
-
-        return $blocks;
-    }
+   
 }

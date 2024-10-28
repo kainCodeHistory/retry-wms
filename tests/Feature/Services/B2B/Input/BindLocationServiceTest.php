@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Libs\ShippingServer\ShippingServerService;
 use Tests\GeneralTestCase;
 
 class BindLocationServiceTest extends GeneralTestCase
@@ -18,7 +17,7 @@ class BindLocationServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
 
         Auth::loginUsingId($user->id);

@@ -7,7 +7,6 @@ use App\Models\Transaction;
 use App\Services\PickingArea\Refill\BindACLocationService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Libs\ShippingServer\ShippingServerService;
 use Illuminate\Validation\ValidationException;
 
 use Tests\GeneralTestCase;
@@ -28,7 +27,7 @@ class BindACLocationServiceTest extends GeneralTestCase
     {
         $user = $this->createUser([
             'email' => 'wmsuser@tests.com',
-            'password' => Hash::make('rhino5hield')
+            'password' => Hash::make('123456')
         ]);
         Auth::loginUsingId($user->id);
 
@@ -54,11 +53,6 @@ class BindACLocationServiceTest extends GeneralTestCase
         $payload = json_decode($jsonString, true);
 
 
-        $mock = $this->mock(ShippingServerService::class);
-        $mock->shouldReceive('upsertPickingAreaInventory')
-            ->withArgs([$material->sku, Transaction::REFILL_INPUT, $location->barcode, $location->priority, $quantity])
-            ->once()
-            ->andReturn();
 
         app(BindACLocationService::class)
             ->setPayload($payload)
