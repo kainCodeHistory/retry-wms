@@ -14,11 +14,4 @@ class PickingItemRepository extends BaseRepository
         return PickingItem::whereIn('material_sku', $skus)->select('material_sku', 'location', 'storage_box')->get();
     }
 
-    public function getAvailablePickingItems(string $checkSku, string $location)
-    {
-        return $this->model::where('material_sku', $checkSku)
-            ->where('location', $location)
-            ->orderBy('bound_at', 'asc')
-            ->get();
-    }
 }

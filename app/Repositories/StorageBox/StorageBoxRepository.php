@@ -57,24 +57,4 @@ class StorageBoxRepository extends BaseRepository
             )
             ->get();
     }
-
-    public function getAlreadyBindBox(string $storageBox)
-    {
-        return StorageBox::where('location', '!=', '')
-            ->where('status', StorageBox::STORAGE)
-            ->where('barcode', $storageBox)
-            ->get();
-    }
-
-    public function updateBoundPickingAreaTimestamp(int $storageBoxId, $now)
-    {
-        return StorageBox::where('id', '=', $storageBoxId)
-            ->whereNull('bound_picking_area_at')
-            ->update([
-                'bound_picking_area_at' => $now
-            ]);
-    }
-    public function getMaxStorageBox(string $prefix){
-        return $this->model::where('barcode','like',$prefix.'%')->get();
-    }
 }

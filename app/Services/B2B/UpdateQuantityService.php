@@ -66,16 +66,7 @@ class UpdateQuantityService extends AppService
 
         $storageBox = $storageBoxItem->storageBox;
 
-        $storageZone = config('storageBoxZone.storage');
-        $floor = (array_values($storageZone['5F']));
         $storageBox = $this->storageBoxRepository->search(['barcode' => $storageBoxItem->storage_box])->first();
-        if (!is_null($storageBox)) {
-            $prefix =  $storageBox->prefix;
-
-            if (!in_array($prefix, $floor)) {
-                throw ValidationException::withMessages(['box' => '此貨箱只能在B2C倉 (' . $this->payload['storageBox'] . ')使用。']);
-            }
-        }
 
         try {
 
@@ -149,21 +140,12 @@ class UpdateQuantityService extends AppService
                 'user' => Auth::user()->id
             ]);
 
+            $this->storageBoxItemRepository->update( $storageBoxItem->id,['quantity' => $subtotal]);
+
             app(UpdateB2BStockService::class)
                 ->setPayload($payload)
                 ->exec();
 
-            //TODO B2B
-            //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-            // if ($event !== 'adjust') {
-            //     $this->shippingServerService->upsertB2BPickingAreaInventory(
-            //         $storageBoxItem->material_sku,
-            //         $event,
-            //         $storageBox->location,
-            //         0,
-            //         $adjustQuantity
-            //     );
-            // }
 
             DB::commit();
 

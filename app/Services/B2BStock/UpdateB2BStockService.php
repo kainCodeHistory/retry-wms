@@ -70,16 +70,7 @@ class UpdateB2BStockService extends AppService
                 $event = $item['event'];
                 $stock = $this->b2bStockRepository->search(['sku' => $item['sku']])->first();
 
-                $storageZone = config('storageBoxZone.storage');
-                $floor = (array_values($storageZone['5F']));
                 $storageBox = $this->storageBoxRepository->search(['barcode' => $item['eventKey']])->first();
-                if (!is_null($storageBox)) {
-                    $prefix =  $storageBox->prefix;
-
-                    if (!in_array($prefix, $floor)) {
-                        throw ValidationException::withMessages(['box' => '此貨箱只能在B2C倉 (' . $this->payload['storageBox'] . ')使用。']);
-                    }
-                }
                 if (
                     $event === B2BStockLog::STOCK_INPUT ||
                     $event === B2BStockLog::TRANSFER_INPUT ||
@@ -158,12 +149,6 @@ class UpdateB2BStockService extends AppService
                 $loggedInUser
             );
 
-            $blocks = [];
-            array_push($blocks, $this->getSlackHeader("B2B 負庫存。"));
-            $blocks = array_merge($blocks, $this->getSlackBody($event, $item['sku'], $item['quantity'], '無此 SKU 庫存。'));
-
-            app(SlackService::class)
-                ->sendMessageViaWebhookURL(config('app.slack.channel.nxl_logger'), $blocks);
         } else {
             $subtotal = $stock->total_quantity - $item['quantity'];
 
@@ -180,14 +165,7 @@ class UpdateB2BStockService extends AppService
                 $loggedInUser
             );
 
-            if ($subtotal < 0) {
-                $blocks = [];
-                array_push($blocks, $this->getSlackHeader("B2B 負庫存。"));
-                $blocks = array_merge($blocks, $this->getSlackBody($event, $item['sku'], $item['quantity'], sprintf('庫存不足 (原庫存: %s)。', $subtotal + $item['quantity'])));
-
-                app(SlackService::class)
-                    ->sendMessageViaWebhookURL(config('app.slack.channel.nxl_logger'), $blocks);
-            }
+          
         }
     }
 
@@ -232,52 +210,5 @@ class UpdateB2BStockService extends AppService
         ]);
     }
 
-    private function getSlackHeader(string $header): array
-    {
-        return [
-            "type" => "header",
-            "text" => [
-                "type" => "plain_text",
-                "text" => $header
-            ]
-        ];
-    }
-
-    private function getSlackBody(string $event, string $sku, int $quantity, string $note): array
-    {
-        $body = [];
-        array_push($body, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*SKU*: `%s`", $sku)
-            ]
-        ]);
-
-        array_push($body, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*異動數量*: `%s`", $quantity)
-            ]
-        ]);
-
-        array_push($body, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*事件代碼*: `%s`", $event)
-            ]
-        ]);
-
-        array_push($body, [
-            "type" => "section",
-            "text" => [
-                "type" => "mrkdwn",
-                "text" => sprintf("*錯誤訊息*: `%s`", $note)
-            ]
-        ]);
-
-        return $body;
-    }
+   
 }

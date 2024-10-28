@@ -152,11 +152,6 @@ class BindXBLocationService extends AppService
                 ])
                 ->exec();
 
-            //TODO B2B
-            //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-            // app(ShippingServerService::class)
-            //     ->upsertB2BPickingAreaInventory($material->sku, Transaction::STORAGE_BOX_INPUT,$location->barcode, $location->priority, (int)$this->payload['quantity']);
-
             DB::commit();
 
             return $transaction;

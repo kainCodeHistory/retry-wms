@@ -18,7 +18,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Libs\ShippingServer\ShippingServerService;
 
 class BindLocationService extends AppService
 {
@@ -75,13 +74,6 @@ class BindLocationService extends AppService
         }
         foreach ($storageBoxes as  $storageBox) {
 
-
-            $prefix =  $storageBox->prefix;
-            $storageZone = config('storageBoxZone.storage');
-            $floor = (array_values($storageZone['3F']));
-            if (in_array($prefix, $floor)) {
-                throw ValidationException::withMessages(['box' => '此貨箱只能綁定在B2C倉 (' . $this->payload['storageBox'] . ')。']);
-            }
 
 
             $location = $this->locationRepository->search([
@@ -150,10 +142,6 @@ class BindLocationService extends AppService
                         ])
                         ->exec();
 
-                    //TODO B2B
-                    //寫入shipping_server b2b_stock/b2b_picking_area_inventory相關
-                    // app(ShippingServerService::class)
-                    //     ->upsertB2BPickingAreaInventory($storageBox->material_sku, Transaction::STORAGE_BOX_INPUT, $location->barcode, $location->priority, $storageBox->quantity);
                 } else {
                     // 儲位重設
                     $this->storageBoxRepository->update(
