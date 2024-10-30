@@ -52,8 +52,7 @@ class UpsertB2B5FInputServiceTest extends GeneralTestCase
             'display_name' => 'Button All In 按鈕',
             'full_name' => 'Button All In 按鈕',
             'check_sku' => 'NX01K',
-            'ean' => '4710227230383',
-            'upc' => '888543003005'
+            'ean' => '4710227230383'
         ]);
 
         $note = $this->faker->word();
