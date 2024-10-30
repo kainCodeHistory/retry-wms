@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class B2cStockLogsTable extends Migration
+class B2bStockLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class B2cStockLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('b2c_stock_logs', function (Blueprint $table) {
+        //
+        Schema::create('b2b_stock_logs', function (Blueprint $table) {
             $table->id();
 
             $table->date('working_day');
@@ -23,6 +24,7 @@ class B2cStockLogsTable extends Migration
             $table->string('event', 30)->default('');
             $table->string('event_key', 50)->default('');
             $table->string('note', 100)->default('');
+            $table->string('user_name', 30)->default('');
 
             $table->timestamps();
         });
@@ -35,6 +37,7 @@ class B2cStockLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('b2c_inventory_logs');
+        //
+        Schema::dropIfExists('b2b_stock_logs');
     }
 }

@@ -27,10 +27,16 @@ class CreateStorageBoxesTable extends Migration
 
             $table->bigInteger('warehouse_id')->unsigned()->nullable();
             $table->foreign('warehouse_id')->references('id')->on('warehouses');
-
+            $table->string('sku', 30)->default('');
             $table->string('location', 20)->default(''); // 儲位代碼
             $table->string('status', 20)->default(''); // 狀態
             $table->boolean('is_empty')->default(true);
+            
+           
+            $table->integer('initial_quantity')->default(0);
+            $table->timestamp('bound_material_at')->nullable();
+            $table->timestamp('bound_location_at')->nullable();
+            $table->timestamp('bound_picking_area_at')->nullable();
             $table->timestamps();
 
             $table->unique(['barcode', 'location']);

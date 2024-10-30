@@ -24,7 +24,6 @@ class CreateMaterialsTable extends Migration
             $table->string('check_sku', 20)->default(''); //原料號
             $table->boolean('check_for_leash')->default(true);
             $table->string('ean', 13)->default('');//撿貨掃的條碼
-            $table->string('upc', 12)->default('');//Amazon
             $table->timestamps();
         });
     }
