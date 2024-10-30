@@ -173,7 +173,6 @@ export default {
       productTitle: "",
       sku: "",
       storageBoxes: [],
-      upc: "",
     };
   },
 
@@ -200,7 +199,6 @@ export default {
           this.ean = result.data.ean;
           this.productTitle = result.data.productTitle;
           this.sku = result.data.sku;
-          this.upc = result.data.upc;
           this.eanSku = "";
           this.loader = false;
         } catch (error) {
@@ -216,7 +214,6 @@ export default {
       this.ean = "";
       this.productTitle = "";
       this.sku = "";
-      this.upc = "";
       this.eanSku = "";
     },
   },
