@@ -53,7 +53,6 @@ class GetLocationService extends AppService
             'productTitle' => $material->display_name,
             'checkSku' => $material->checkSku,
             'ean' => $material->ean,
-            'upc' => $material->upc,
             'storageBoxes' => $storageBoxes,
             'defaultLocations' => $defaultLocations
         ];
