@@ -13,11 +13,6 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\SyncCheckSkuMaterialCommand',
-        'App\Console\Commands\SyncMaterialCommand',
-        'App\Console\Commands\SyncPickingAreaInventoryCommand',
-        'App\Console\Commands\StockOutCommand',
-        'App\Console\Commands\ClearDataCommand'
     ];
 
     /**
@@ -28,15 +23,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-       $schedule->command('stock:out')->timezone('Asia/Taipei')->dailyAt('00:45')->withoutOverlapping();
-        $schedule->command('stock:out')->timezone('Asia/Taipei')->dailyAt('12:45')->withoutOverlapping();
-        $schedule->command('clear:data')->timezone('Asia/Taipei')->dailyAt('01:00')->withoutOverlapping();
-
-        $schedule->command('sync:materials')->timezone('Asia/Taipei')->dailyAt('03:00')->withoutOverlapping();
-        $schedule->command('sync:materialsCheckSku')->timezone('Asia/Taipei')->dailyAt('04:00')->withoutOverlapping();
-
-        $schedule->command('shipmentItem:LocationIsEmpty')->timezone('Asia/Taipei')->dailyAt('09:00')->withoutOverlapping();
-        $schedule->command('shipmentItem:LocationIsEmpty')->timezone('Asia/Taipei')->dailyAt('13:30')->withoutOverlapping();
+       
     }
 
     /**
