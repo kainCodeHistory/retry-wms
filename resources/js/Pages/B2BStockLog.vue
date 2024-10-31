@@ -17,7 +17,7 @@
                   <template><sup class="text-red-500 font-bold">*</sup>SKU</template>
                 </wx-label>
                 <wx-input id="eanSku" class="block mt-1 w-full" type="text" :value="eanSku" required autofocus
-                  ref="eanSku" @update="updateEanSku" />
+                  ref="eanSku" @update="updateEanSku"  @keyup="handleKeyUp" />
                 <ul v-if="searchSku.length && searchSku[0] !== eanSku"
                   class="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white z-10"
                   style="position:absolute">
@@ -192,14 +192,20 @@ export default {
         this.loader = false
       }
     },
+    handleKeyUp(event) {
+      if (event.key === 'Enter') {
+        this.handleSkuSearch();
+          }
+        },
+    async handleSkuSearch() {
+      this.skuLogs = [];
+      if (this.eanSku) {
+         this.loader = true;
+         await this.getSkuLog();
+      }
+        },
 
-    handleSkuSearch() {
-      this.skuLogs = []
-      this.eanSku = this.searchSku[0]
-      this.loader = true
-      this.paginator = { page: 1, total: 0 }
-      return this.getSkuLog()
-    },
+
 
     async getSkuLog() {
       try {

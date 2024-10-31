@@ -16,11 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->seedDefaultUsers(4);
+        $this->seedDefaultUsers(2);
         $this->seedDefaultFactory(['測試廠']);
         $this->seedDefaultWarehouse();
         $this->seedDefaultStorageBoxes();
         $this->seedDefaultLocations();
+        $this->seedDefaultMaterials();
     }
 
     private function seedDefaultUsers(int $quantity)
@@ -57,7 +58,7 @@ class DatabaseSeeder extends Seeder
             [
                 'factory_id' => $factory->id,
                 'code' => 'X',
-                'name' => $factory->name . '-B2B撿料倉',
+                'name' => $factory->name . '-撿料倉',
                 'tt_code' => 'test01',
                 'is_picking_area' => true,
                 'activate' => true,
@@ -87,7 +88,7 @@ class DatabaseSeeder extends Seeder
         ])->get(0);
 
         $now = Carbon::now();
-        // 雙箱區
+
         for ($rack = 0; $rack < 2; $rack++) {
             for ($row = 0; $row < 2; $row++) {
                 for ($column = 0; $column < 4; $column++) {
@@ -124,35 +125,12 @@ class DatabaseSeeder extends Seeder
             }
         }
         $locationRepository->createMany($locations);
-        $locations = [];
 
-        $warehouse = $warehouseRepository->search([
-            'factory_id' => $factory->id,
-            'tt_code' => 'test01',
-            'is_picking_area' => false
-        ])->get(0);
 
-        $zones = ['A', 'B', 'C', 'D', 'E'];
-        foreach ($zones as $zone) {
-            for ($rack = 0; $rack < 2; $rack++) {
-                for ($row = 0; $row < 2; $row++) {
-                    $barcode = $warehouse->code . $zone . '-' . substr('00' . ($rack + 1), -2) . '-' . substr('00' . ($row + 1), -2);
-                    $locations[] = [
-                        'factory_id' => $factory->id,
-                        'warehouse_id' => $warehouse->id,
-                        'barcode' => $barcode,
-                        'zone' => $zone,
-                        'created_at' => $now,
-                        'updated_at' => $now
-                    ];
-                }
-            }
-        }
-        $locationRepository->createMany($locations);
 
         $locations = [];
 
-        // B2B紙箱Ａ區
+
         for ($rack = 0; $rack < 2; $rack++) {
             for ($row = 0; $row < 2; $row++) {
                 $barcode = 'XA' . '-' . substr('00' . ($rack + 1), -2) . '-' . substr('00' . ($row + 1), -2);
@@ -170,7 +148,7 @@ class DatabaseSeeder extends Seeder
         $locationRepository->createMany($locations);
 
         $locations = [];
-        // B2B特殊區
+        // 特殊區
         for ($rack = 0; $rack < 1; $rack++) {
             for ($row = 0; $row < 10; $row++) {
                 for ($column = 0; $column < 7; $column++) {
@@ -190,8 +168,6 @@ class DatabaseSeeder extends Seeder
 
         $locationRepository->createMany($locations);
         $locations = [];
-
-
     }
 
     private function seedDefaultStorageBoxes()
@@ -207,7 +183,7 @@ class DatabaseSeeder extends Seeder
         $storageBoxRepository = new \App\Repositories\StorageBox\StorageBoxRepository();
 
         for ($k = 1; $k <= $quantity; $k++) {
-            $barcode = $prefix . substr('0000000000' . $k, -$padLength);
+            $barcode = $prefix . substr('0000' . $k, -$padLength);
 
             $storageBoxRepository->create([
                 'prefix' => $prefix,
@@ -218,5 +194,20 @@ class DatabaseSeeder extends Seeder
                 'is_empty' => 1
             ]);
         }
+    }
+
+
+    private function seedDefaultMaterials()
+    {
+        $materialRepository = new \App\Repositories\MaterialRepository();
+
+        $materialRepository->create([
+
+            'sku' => 'a123456',
+            'display_name' => 'iphonexx',
+            'full_name' => 'iphonexx',
+            'check_sku' => 'a123456',
+            'ean' => '1111'
+        ]);
     }
 }
