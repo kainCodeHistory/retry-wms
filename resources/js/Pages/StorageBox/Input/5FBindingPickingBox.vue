@@ -140,7 +140,7 @@ export default {
 
         await this.axios.get("/sanctum/csrf-cookie");
         await this.axios.post(
-          "/api/b2b-5f/storage-box/input/bind-picking-Box",
+          "/api/b2b/storage-box/input/bind-picking-Box",
           {
             batchNo: this.batchNo,
             storageBox: this.storageBox,

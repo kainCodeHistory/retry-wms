@@ -5,7 +5,7 @@ namespace App\Services\B2B;
 use App\Repositories\B2B5FInputRepository;
 use App\Services\AppService;
 
-class DeleteB2B5FInputService extends AppService
+class DeleteB2BInputService extends AppService
 {
     protected $b2b5FInputRepository;
 

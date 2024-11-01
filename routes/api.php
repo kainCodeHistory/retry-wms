@@ -44,24 +44,24 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
      Route::get("/storage-box/check/{storageBox}", [InputController::class, 'checkStorageBox']);
      Route::get("/storage-box/input/binding/{storageBox}", [InputController::class, 'getBinding']);
     
-    Route::delete("/b2b-5f/input/{inputId}", [B2BController::class, 'delete5FInput']);
-    Route::get("/b2b-5f/input/{inputId}", [B2BController::class, 'get5FInput']);
-    Route::post("/b2b-5f/inputs", [B2BController::class, "get5FInputList"]);
-    Route::post("/b2b-5f/input", [B2BController::class, 'upsert5FInput']);
+    Route::delete("/b2b/input/{inputId}", [B2BController::class, 'deleteb2bInput']);
+    Route::get("/b2b/input/{inputId}", [B2BController::class, 'getb2bInput']);
+    Route::post("/b2b/inputs", [B2BController::class, "getb2bInputList"]);
+    Route::post("/b2b/input", [B2BController::class, 'upsertb2bInput']);
 
 
-    //B2B查詢
+    //查詢
     Route::get('/b2b/query/ean-sku/{eanSku}', [QueryController::class, 'getB2BLocations']);
     Route::get('/b2b/stock/sku-list', [B2BStockController::class, 'skuList']);
     Route::get('/b2b/stock-logs/{sku}/', [B2BStockController::class, 'getSkuDate']);
 
 
-    //B2B入庫
-    Route::post("/b2b-5f/storage-box/input/bind-picking-Box", [B2BInputController::class, 'bindPickingBox']);
-    Route::post("/b2b-5f/storage-box/input/bind-location", [B2BInputController::class, 'bindLocation']);
-    Route::post('/b2b-5f/storage-box/input/xb', [B2BInputController::class, 'bindXBLocation']);
+    //入庫
+    Route::post("/b2b/storage-box/input/bind-picking-Box", [B2BInputController::class, 'bindPickingBox']);
+    Route::post("/b2b/storage-box/input/bind-location", [B2BInputController::class, 'bindLocation']);
+    Route::post('/b2b/storage-box/input/xb', [B2BInputController::class, 'bindXBLocation']);
     
-    //B2B出庫
-    Route::post("/b2b-5f/input/quantity", [B2BController::class, 'updateQuantity']);
+    //出庫
+    Route::post("/b2b/input/quantity", [B2BController::class, 'updateQuantity']);
 
 });

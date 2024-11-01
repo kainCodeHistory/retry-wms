@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\B2BInventoryDebitJob;
-use App\Services\B2B\DeleteB2B5FInputService;
-use App\Services\B2B\GetB2B5FInputService;
-use App\Services\B2B\UpsertB2B5FInputService;
-use App\Services\B2B\GetB2B5FInputListService;
+use App\Services\B2B\DeleteB2BInputService;
+use App\Services\B2B\GetB2BInputService;
+use App\Services\B2B\UpsertB2BInputService;
+use App\Services\B2B\GetB2BInputListService;
 use App\Services\B2B\UpdateQuantityService;
 use Illuminate\Http\Request;
 
 class B2BController extends Controller
 {
-    public function delete5FInput(Request $request, int $inputId)
+    public function deleteb2bInput(Request $request, int $inputId)
     {
-        app(DeleteB2B5FInputService::class)
+        app(DeleteB2BInputService::class)
             ->setInputId($inputId)
             ->exec();
 
@@ -23,27 +23,27 @@ class B2BController extends Controller
         ]);
     }
 
-    public function get5FInput(Request $request, int $inputId)
+    public function getb2bInput(Request $request, int $inputId)
     {
-        $input = app(GetB2B5FInputService::class)
+        $input = app(GetB2BInputService::class)
             ->setInputId($inputId)
             ->exec();
 
         return response()->json(is_null($input) ? [] : $input);
     }
 
-    public function get5FInputList(Request $request)
+    public function getb2bInputList(Request $request)
     {
-        $list = app(GetB2B5FInputListService::class)
+        $list = app(GetB2BInputListService::class)
             ->setPayload($request->all())
             ->exec();
 
         return response()->json(count($list) === 0 ? [] : $list);
     }
 
-    public function upsert5FInput(Request $request)
+    public function upsertb2bInput(Request $request)
     {
-        $input = app(UpsertB2B5FInputService::class)
+        $input = app(UpsertB2BInputService::class)
             ->setPayload($request->all())
             ->exec();
 

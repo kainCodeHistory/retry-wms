@@ -4,7 +4,6 @@ namespace App\Services\StorageBox\Input;
 
 use App\Models\StorageBox\StorageBox;
 use App\Repositories\LocationRepository;
-use App\Repositories\StorageBox\InventoryItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
 use App\Repositories\StorageItemRepository;
 use App\Services\AppService;
@@ -20,12 +19,10 @@ class GetBindingService extends AppService
     protected $storageItemRepository;
 
     public function __construct(
-        InventoryItemRepository $inventoryItemRepository,
         LocationRepository $locationRepository,
         StorageBoxRepository $storageBoxRepository,
         StorageItemRepository $storageItemRepository
     ) {
-        $this->inventoryItemRepository = $inventoryItemRepository;
         $this->locationRepository = $locationRepository;
         $this->storageBoxRepository = $storageBoxRepository;
         $this->storageItemRepository = $storageItemRepository;
@@ -47,7 +44,7 @@ class GetBindingService extends AppService
 
         
             // 預備倉儲位
-            $location = $this->inventoryItemRepository->getSuggestLocations($box->material_sku)->first();
+            $location = $this->storageBoxRepository->getSuggestLocations($box->material_sku)->first();
 
             return [
                 'location' => is_null($location) ? 'BZ-01-01' : $location->location,
