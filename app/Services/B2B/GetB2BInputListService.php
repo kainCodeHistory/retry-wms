@@ -5,7 +5,7 @@ namespace App\Services\B2B;
 use App\Repositories\B2B5FInputRepository;
 use App\Services\AppService;
 
-class GetB2B5FInputListService extends AppService
+class GetB2BInputListService extends AppService
 {
     protected $payload;
 

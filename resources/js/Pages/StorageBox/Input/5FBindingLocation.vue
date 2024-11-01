@@ -128,7 +128,7 @@ export default {
 
         await this.axios.get("/sanctum/csrf-cookie");
         const result = await this.axios.post(
-          "/api/b2b-5f/storage-box/input/bind-location",
+          "/api/b2b/storage-box/input/bind-location",
           {
             location: this.location,
             storageBox: this.storageBox,

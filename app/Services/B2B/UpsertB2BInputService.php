@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
-class UpsertB2B5FInputService extends AppService
+class UpsertB2BInputService extends AppService
 {
     private $payload;
 

@@ -387,7 +387,7 @@ export default {
 
         await this.axios.get("/sanctum/csrf-cookie");
         const result = await this.axios.post(
-          "/api/b2b-5f/input/quantity",
+          "/api/b2b/input/quantity",
           {
             adjustQuantity: this.adjustQuantity,
             event: this.eventKey,
