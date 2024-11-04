@@ -3,8 +3,6 @@
 namespace App\Services\StorageBox;
 
 use App\Models\Transaction;
-use App\Repositories\PickingArea\RefillRepository;
-use App\Repositories\StorageBox\PickingItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
 use App\Repositories\TransactionRepository;
@@ -16,21 +14,15 @@ use Illuminate\Validation\ValidationException;
 class ResetService extends AppService
 {
     protected $payload;
-    protected $pickingItemRepository;
-    protected $refillRepository;
     protected $storageBoxRepository;
     protected $storageBoxItemRepository;
     protected $transactionRepository;
 
     public function __construct(
-        PickingItemRepository $pickingItemRepository,
-        RefillRepository $refillRepository,
         StorageBoxRepository $storageBoxRepository,
         StorageBoxItemRepository $storageBoxItemRepository,
         TransactionRepository $transactionRepository
     ) {
-        $this->pickingItemRepository = $pickingItemRepository;
-        $this->refillRepository = $refillRepository;
         $this->storageBoxRepository = $storageBoxRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
         $this->transactionRepository = $transactionRepository;
@@ -70,22 +62,7 @@ class ResetService extends AppService
             ])->first();
 
             if (!is_null($storageBoxItem)) {
-                //負數要扣到第二箱
-                if (str_starts_with($storageBox->location, 'AA') || str_starts_with($storageBox->location, 'MN-07')) {
-                    $pickingItems = $this->pickingItemRepository->search([
-                        'location' => $storageBox->location
-                    ]);
-
-                    if (count($pickingItems) > 1) {
-                        $anotherPickingItem = $pickingItems->filter(function ($pickingItem) use ($storageBox) {
-                            return $pickingItem->storage_box !== $storageBox->barcode;
-                        })->first();
-
-                        $this->storageBoxItemRepository->updateQuantityWithStorageBox($anotherPickingItem->storage_box, $anotherPickingItem->quantity + $storageBoxItem->quantity);
-                    }
-                }
-
-
+              
                 $this->transactionRepository->create([
                     'warehouse_id' => $storageBox->warehouse_id,
                     'location' => $storageBox->location,
@@ -106,14 +83,7 @@ class ResetService extends AppService
                 $this->storageBoxRepository->reset($storageBox->barcode);
             }
 
-            // 移除補料紀錄
-            $refills = $this->refillRepository->search([
-                'repl_storage_box' => $storageBox->barcode
-            ]);
-
-            if (count($refills) > 0) {
-                $this->refillRepository->deleteMany($refills->pluck('id')->toArray());
-            }
+          
 
             DB::commit();
 

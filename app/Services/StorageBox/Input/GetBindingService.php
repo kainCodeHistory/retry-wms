@@ -5,7 +5,6 @@ namespace App\Services\StorageBox\Input;
 use App\Models\StorageBox\StorageBox;
 use App\Repositories\LocationRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
-use App\Repositories\StorageItemRepository;
 use App\Services\AppService;
 use Illuminate\Validation\ValidationException;
 
@@ -16,16 +15,13 @@ class GetBindingService extends AppService
     protected $inventoryItemRepository;
     protected $locationRepository;
     protected $storageBoxRepository;
-    protected $storageItemRepository;
 
     public function __construct(
         LocationRepository $locationRepository,
-        StorageBoxRepository $storageBoxRepository,
-        StorageItemRepository $storageItemRepository
+        StorageBoxRepository $storageBoxRepository
     ) {
         $this->locationRepository = $locationRepository;
         $this->storageBoxRepository = $storageBoxRepository;
-        $this->storageItemRepository = $storageItemRepository;
     }
 
     public function setStorageBox(string $storageBox)
@@ -48,7 +44,7 @@ class GetBindingService extends AppService
 
             return [
                 'location' => is_null($location) ? 'BZ-01-01' : $location->location,
-                'pickLocation' => $this->storageItemRepository->get5FPickingLocations($box->material_sku)
+                'pickLocation' => $this->storageBoxRepository->getSuggestLocations($box->material_sku)
                     ->pluck('location')
                     
             ];

@@ -9,7 +9,6 @@ use App\Services\Query\GetB2BStorageBoxService;
 use App\Services\Query\GetBindTimeService;
 use App\Services\Query\GetLocationService;
 use App\Services\Query\GetMaterialService;
-use App\Services\Query\GetStorageBoxService;
 use Illuminate\Http\Request;
 
 class QueryController extends Controller
@@ -35,12 +34,6 @@ class QueryController extends Controller
             ->exec();
     }
 
-    public function getStorageBoxes(Request $request, string $storageBox)
-    {
-        return app(GetStorageBoxService::class)
-            ->setStorageBox($storageBox)
-            ->exec();
-    }
     public function getB2BLocations(Request $request, string $eanSku)
     {
         return app(GetB2BLocationService::class)

@@ -7,10 +7,8 @@ use App\Models\StorageBox\StorageBox;
 use App\Models\Transaction;
 use App\Repositories\LocationRepository;
 use App\Repositories\MaterialRepository;
-use App\Repositories\StorageBox\PickingItemRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
-use App\Repositories\StorageItemRepository;
 use App\Repositories\TransactionRepository;
 use App\Services\AppService;
 use App\Services\B2BStock\UpdateB2BStockService;
@@ -24,27 +22,21 @@ class BindLocationService extends AppService
     protected $payload;
     protected $locationRepository;
     protected $materialRepository;
-    protected $pickingItemRepository;
     protected $storageBoxRepository;
     protected $transactionRepository;
-    protected $storageItemRepository;
     protected $storageBoxItemRepository;
 
     public function __construct(
         LocationRepository $locationRepository,
         MaterialRepository $materialRepository,
-        PickingItemRepository $pickingItemRepository,
         StorageBoxRepository $storageBoxRepository,
         TransactionRepository $transactionRepository,
-        StorageItemRepository $storageItemRepository,
         StorageBoxItemRepository $storageBoxItemRepository
     ) {
         $this->locationRepository = $locationRepository;
         $this->materialRepository = $materialRepository;
-        $this->pickingItemRepository = $pickingItemRepository;
         $this->storageBoxRepository = $storageBoxRepository;
         $this->transactionRepository = $transactionRepository;
-        $this->storageItemRepository = $storageItemRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
     }
 

@@ -7,10 +7,8 @@ use App\Models\StorageBox\StorageBox;
 use App\Models\Transaction;
 use App\Repositories\LocationRepository;
 use App\Repositories\MaterialRepository;
-use App\Repositories\StorageBox\PickingItemRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
-use App\Repositories\StorageItemRepository;
 use App\Repositories\TransactionRepository;
 use App\Services\AppService;
 use App\Services\B2BStock\UpdateB2BStockService;
@@ -24,22 +22,18 @@ class BindXBLocationService extends AppService
 {
     protected $locationRepository;
     protected $materialRepository;
-    protected $pickingItemRepository;
     protected $storageBoxRepository;
     protected $storageBoxItemRepository;
     protected $transactionRepository;
-    protected $storageItemRepository;
     protected $payload;
 
-    public function __construct(LocationRepository $locationRepository, MaterialRepository $materialRepository, PickingItemRepository $pickingItemRepository, StorageBoxRepository $storageBoxRepository, StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository, StorageItemRepository $storageItemRepository)
+    public function __construct(LocationRepository $locationRepository, MaterialRepository $materialRepository, StorageBoxRepository $storageBoxRepository, StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository)
     {
         $this->locationRepository = $locationRepository;
         $this->materialRepository = $materialRepository;
-        $this->pickingItemRepository = $pickingItemRepository;
         $this->storageBoxRepository = $storageBoxRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
         $this->transactionRepository = $transactionRepository;
-        $this->storageItemRepository = $storageItemRepository;
     }
 
     public function setPayload(array $payload)

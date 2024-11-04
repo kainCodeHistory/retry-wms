@@ -6,10 +6,8 @@ use App\Models\StorageBox\StorageBox;
 use App\Models\Transaction;
 use App\Repositories\LocationRepository;
 use App\Repositories\MaterialRepository;
-use App\Repositories\StorageBox\PickingItemRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
-use App\Repositories\StorageItemRepository;
 use App\Repositories\TransactionRepository;
 use App\Services\AppService;
 use Carbon\Carbon;
@@ -22,23 +20,19 @@ class BindACLocationService extends AppService
 {
     protected $locationRepository;
     protected $materialRepository;
-    protected $pickingItemRepository;
     protected $storageBoxRepository;
     protected $storageBoxItemRepository;
-    protected $storageItemRepository;
     protected $transactionRepository;
 
     private $payload;
 
-    public function __construct(LocationRepository $locationRepository, MaterialRepository $materialRepository, PickingItemRepository $pickingItemRepository, StorageBoxRepository $storageBoxRepository, StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository,StorageItemRepository $storageItemRepository)
+    public function __construct(LocationRepository $locationRepository, MaterialRepository $materialRepository,  StorageBoxRepository $storageBoxRepository, StorageBoxItemRepository $storageBoxItemRepository, TransactionRepository $transactionRepository)
     {
         $this->locationRepository = $locationRepository;
         $this->materialRepository = $materialRepository;
-        $this->pickingItemRepository = $pickingItemRepository;
         $this->storageBoxRepository = $storageBoxRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
         $this->transactionRepository = $transactionRepository;
-        $this->storageItemRepository = $storageItemRepository;
     }
 
     public function setPayload(array $payload)
@@ -90,21 +84,11 @@ class BindACLocationService extends AppService
             'barcode' => $this->payload['location']
         ])->first();
 
-        $storageItem = $this->storageItemRepository->search([
-            'location' => $this->payload['location']
-        ])->first();
 
         if (is_null($location)) {
             throw ValidationException::withMessages(['location' => '無此儲位 (' . $this->payload['location'] . ')。']);
         }
 
-        if (is_null($storageItem)) {
-            throw ValidationException::withMessages(['location' => '此儲位無預設綁定物料設定 (' . $this->payload['location'] . ')。']);
-        }
-
-        if ($material->id !== (int)$storageItem->material_id) {
-            throw ValidationException::withMessages(['location' => '此貨箱的SKU (' . $material->sku . ') 與此儲位預設的 SKU (' . $storageItem->material_sku . ') 不一致。']);
-        }
 
         try {
             DB::beginTransaction();
