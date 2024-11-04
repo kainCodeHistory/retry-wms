@@ -10,7 +10,6 @@ class GetACLocationService extends AppService
 {
     protected $storageBox;
     protected $locationRepository;
-    protected $pickingItemRepository;
 
     public function __construct(LocationRepository $locationRepository)
     {

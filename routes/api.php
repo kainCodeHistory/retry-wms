@@ -6,9 +6,9 @@ use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\PickingArea\RefillController;
 use App\Http\Controllers\QueryController;
 use App\Http\Controllers\StorageBox\InputController ;
-use App\Http\Controllers\StorageBox\OutputController ;
 use App\Http\Controllers\B2BCRUD\B2BInputController;
 use App\Http\Controllers\B2BStockController;
+use App\Http\Controllers\ResetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -60,8 +60,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post("/b2b/storage-box/input/bind-picking-Box", [B2BInputController::class, 'bindPickingBox']);
     Route::post("/b2b/storage-box/input/bind-location", [B2BInputController::class, 'bindLocation']);
     Route::post('/b2b/storage-box/input/xb', [B2BInputController::class, 'bindXBLocation']);
-    
-    //出庫
     Route::post("/b2b/input/quantity", [B2BController::class, 'updateQuantity']);
+
+    //箱子資料清除
+    Route::post("/storage-box/reset",[ResetController::class, 'resetStorageBox']);
 
 });

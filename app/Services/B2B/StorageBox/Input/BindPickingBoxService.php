@@ -8,7 +8,6 @@ use App\Repositories\LocationRepository;
 use App\Repositories\MaterialRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
 use App\Repositories\StorageBox\StorageBoxRepository;
-use App\Repositories\StorageItemRepository;
 use App\Repositories\TransactionRepository;
 use App\Services\AppService;
 use Carbon\Carbon;
@@ -23,7 +22,6 @@ class BindPickingBoxService extends AppService
     protected $storageBoxRepository;
     protected $materialRepository;
     protected $transactionRepository;
-    protected $storageItemRepository;
     protected $locationRepository;
 
 
@@ -33,15 +31,13 @@ class BindPickingBoxService extends AppService
         StorageBoxItemRepository $storageBoxItemRepository,
         MaterialRepository $materialRepository,
         TransactionRepository $transactionRepository,
-        LocationRepository $locationRepository,
-        StorageItemRepository $storageItemRepository
+        LocationRepository $locationRepository
     ) {
         $this->storageBoxRepository = $storageBoxRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
         $this->materialRepository = $materialRepository;
         $this->transactionRepository = $transactionRepository;
         $this->locationRepository = $locationRepository;
-        $this->storageItemRepository = $storageItemRepository;
     }
 
     public function setPayload(array $payload)

@@ -59,6 +59,10 @@ class StorageBoxRepository extends BaseRepository
     }
     public function getSuggestLocations(string $sku)
     {
-        return StorageBox::select('location', DB::Raw('COUNT(barcode) As cnt'))->where('sku', $sku)->groupBy('location')->orderBy('cnt', 'DESC')->get();
+        return StorageBox::select('location', DB::Raw('COUNT(barcode) As cnt'))->where('sku', $sku)->where('location','!=', '')->groupBy('location')->orderBy('cnt', 'DESC')->get();
+    }
+    public function getPickingItems(array $skus)
+    {
+        return StorageBox::whereIn('sku', $skus)->select('sku', 'location', 'barcode')->get();
     }
 }

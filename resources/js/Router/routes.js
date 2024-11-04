@@ -38,6 +38,11 @@ const routes = [
         component: () => import('@/Pages/5FItemInventory.vue'),
         name: 'b2b5fItemInventory'
     },
+    {
+        path: '/reset-storage-box',
+        component: () => import('@/Pages/ResetStorageBox.vue'),
+        name: 'resetStorageBox'
+    },
 
 ]
 

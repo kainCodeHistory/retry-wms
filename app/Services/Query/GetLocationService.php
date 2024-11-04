@@ -5,7 +5,7 @@ namespace App\Services\Query;
 
 use App\Repositories\MaterialRepository;
 use App\Repositories\StorageBox\StorageBoxItemRepository;
-use App\Repositories\StorageItemRepository;
+use App\Repositories\StorageBox\StorageBoxRepository;
 use App\Services\AppService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -14,15 +14,16 @@ class GetLocationService extends AppService
 {
     private $eanSku;
 
-    private $storageItemRepository;
     private $materialRepository;
     private $storageBoxItemRepository;
+    private $storageBoxRepository;
 
-    public function __construct(StorageItemRepository $storageItemRepository, MaterialRepository $materialRepository,StorageBoxItemRepository $storageBoxItemRepository)
+    public function __construct( MaterialRepository $materialRepository,StorageBoxItemRepository $storageBoxItemRepository , StorageBoxRepository $storageBoxRepository)
     {
-        $this->storageItemRepository = $storageItemRepository;
+ 
         $this->materialRepository = $materialRepository;
         $this->storageBoxItemRepository = $storageBoxItemRepository;
+        $this->storageBoxRepository =$storageBoxRepository;
     }
 
     public function setEanSku(string $eanSku)
@@ -44,8 +45,8 @@ class GetLocationService extends AppService
 
         $storageBoxes = $this->storageBoxItemRepository->getLocations($material->sku ,$floor);
 
-        $defaultLocations = $this->storageItemRepository->search([
-            'material_id' => $material->id
+        $defaultLocations = $this->storageBoxRepository->search([
+            'sku' => $material->sku
         ])->pluck('location');
 
         return [

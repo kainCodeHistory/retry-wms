@@ -59,7 +59,7 @@
                   <template>
                     建議儲位:
                     <span class="text-blue-800 font-bold text-base">{{
-                      recommendPickLocation
+                      recommendPickLocation.join(",")
                     }}</span>
                   </template>
                 </wx-label>
@@ -109,7 +109,7 @@ export default {
     return {
       storageBox: "",
       location: "",
-      recommendPickLocation:""
+      recommendPickLocation:[]
     };
   },
 
@@ -154,15 +154,12 @@ export default {
           const result = await this.axios.get(
             `/api/storage-box/input/binding/${e.target.value.trim()}`
           );
-
-          this.recommendLocation = result.data.location;
           this.recommendPickLocation = result.data.pickLocation;
            this.$refs.location.focus();
           this.displayValidation(false);
           this.loader = false;
         } catch (error) {
-          this.recommendLocation = "";
-          this.recommendPickLocation = "";
+          this.recommendPickLocation = [];
 
           this.displayValidation(true, this.handleAxiosResponseErrorMessages(error), "錯誤訊息。");
           this.loader = false;
@@ -173,7 +170,7 @@ export default {
     reset() {
       this.storageBox = "";
       this.location = "";
-      this.recommendPickLocation ="";
+      this.recommendPickLocation =[];
     },
   },
 };
